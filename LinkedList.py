@@ -140,38 +140,90 @@ class LinkedList:
     # Clear the list */
     def clear(self):
         self.__head = self.__tail = None
+        self.__size = 0
 
     # Return true if this list contains the element o 
     def contains(self, e):
-        print("Implementation left as an exercise")
-        return True
+        current = self.__head
+        for i in range(0, self.__size):
+            
+            if current.element is e:
+                return True
+            else:
+                if current == self.__tail:
+                    return False
+                current = current.next
 
     # Remove the element and return true if the element is in the list 
     def remove(self, e):
-        print("Implementation left as an exercise")
-        return True
+        current = self.__head
+        previous = current
+        for i in range(0, self.__size):
+            if current.element is e:
+                if current == self.__tail:
+                    self.__tail = previous
+                previous.next = current.next
+                self.__size -= 1
+                return True
+            else:
+                if current == self.__tail:
+                    return False
+                previous = current
+                current = current.next
 
     # Return the element from this list at the specified index 
     def get(self, index):
-        print("Implementation left as an exercise")
-        return None
+        if index == 0:
+            return self.__head.element
+        elif index >= self.__size:
+            return self.__tail.element
+        else:
+            current = self.__head
+            for i in range(1, self.__size):
+                current = current.next
+                if i == int(index):
+                    return current.element
 
     # Return the index of the head matching element in this list.
     # Return -1 if no match.
     def indexOf(self, e):
-        print("Implementation left as an exercise")
-        return 0
+        current = self.__head
+        index = 0
+        for i in range(0, self.__size):
+            index = i
+            if current.element is e:
+                return index
+            else:
+                if current == self.__tail:
+                    return -1
+                current = current.next
 
     # Return the index of the last matching element in this list
     #  Return -1 if no match. 
     def lastIndexOf(self, e):
-        print("Implementation left as an exercise")
-        return 0
+        current = self.__head
+        index = 0
+        for i in range(0, self.__size):
+            if current.element is e:
+                index = i
+            else:
+                current = current.next
+        return index
 
     # Replace the element at the specified position in this list
     #  with the specified element. */
     def set(self, index, e):
-        print("Implementation left as an exercise")
+        if index == 0:
+            self.__head.element = e
+        elif index >= self.__size:
+            self.__tail.element = e
+        else:
+            current = self.__head
+            for i in range(1, index + 1):
+                current = current.next
+                if i == index:
+                    current.element= e
+        
         return None
     
     # Return elements via indexer
@@ -199,4 +251,27 @@ class LinkedListIterator:
             element = self.current.element
             self.current = self.current.next
             return element    
-        
+
+def main():
+    linked_list = LinkedList()
+    linked_list.addFirst("Fractions")
+    linked_list.addLast("Hello")
+    linked_list.addLast("Rolly")
+    linked_list.addLast("Hello")
+    
+    print("Sletting av ordet 'Rolly' gir:", linked_list.remove("Rolly"), "\nletting av ordet 'Frappucino gir:", linked_list.remove("Frappucino"))
+    
+    print("Sjekke om ordet 'Rolly' fins i listen:", linked_list.contains("Rolly"), "\nSjekker om ordet Fractions fins i listen:", linked_list.contains("Fractions"))
+    print("Index numer 2 i .get() gir:", linked_list.get(2))
+
+    print("Sjekker siste index av ordet 'Hello':", linked_list.lastIndexOf("Hello"))
+
+    linked_list.set(2, "Bubula")
+    print("etter å ha satt index 2 med .set() metoden til 'Bubula' får vi følgende på index 2:", linked_list.get(2))
+
+    linked_list.clear()
+    print("Etter .clear() er head:", linked_list.getFirst(), "tail:", linked_list.getLast(), "og størrelse:", linked_list.getSize())
+
+
+if __name__ == "__main__":
+    main()
